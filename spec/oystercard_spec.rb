@@ -1,6 +1,10 @@
 require 'oystercard'
 
 describe Oystercard do
+  before(:each) do
+    @amount = 10
+  end
+
   describe 'Initialization' do
     it 'has a balance of 0' do
       expect(subject.balance).to eq(0)
@@ -8,9 +12,8 @@ describe Oystercard do
   end
 
   describe '#top_up' do
-    
     it 'increases balance by 10' do
-      expect { subject.top_up(10) }.to change { subject.balance }.by(10)
+      expect { subject.top_up(@amount) }.to change { subject.balance }.by(@amount)
     end
 
     it "prevents balance exceeding £#{Oystercard::BALANCE_LIMIT}" do
@@ -20,7 +23,7 @@ describe Oystercard do
 
   describe '#deduct' do
     it 'reduces balance by 10' do
-      expect { subject.deduct(10) }.to change { subject.balance }.by(-10)
+      expect { subject.deduct(@amount) }.to change { subject.balance }.by(-@amount)
     end
   end
 
