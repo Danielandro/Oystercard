@@ -32,13 +32,19 @@ describe Oystercard do
   describe 'on journey' do
     describe '#touch_in' do
       it 'is in journey after touching in' do
+        subject.top_up(@amount)
         subject.touch_in
         expect(subject).to be_in_journey
+      end
+      it "raises an error if I have less than £#{Oystercard::MINIMUM_FARE}" do
+        message = "Not enough funds"
+        expect { subject.touch_in }.to raise_error(message)
       end
     end
 
     describe '#touch_out' do
       it 'is not in journey after touching out' do
+        subject.top_up(@amount)
         subject.touch_in
         subject.touch_out
         expect(subject).not_to be_in_journey
