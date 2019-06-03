@@ -21,12 +21,16 @@ class Oystercard
     in_journey
   end
 
-  private  
+  def touch_in
+    @in_journey = true
+  end
+
+  private
 
   attr_reader :in_journey
 
   def limit_exceeded?(amount)
     balance + amount > BALANCE_LIMIT
   end
-  
+
 end

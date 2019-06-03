@@ -9,9 +9,7 @@ describe Oystercard do
     it 'has a balance of 0' do
       expect(subject.balance).to eq(0)
     end
-
     it { is_expected.not_to be_in_journey }
-    
   end
 
   describe '#top_up' do
@@ -31,6 +29,13 @@ describe Oystercard do
     end
   end
 
-
+  describe 'on journey' do
+    describe '#touch_in' do
+      it 'is in journey after touching in' do
+        subject.touch_in
+        expect(subject).to be_in_journey
+      end
+    end
+  end
 
 end
