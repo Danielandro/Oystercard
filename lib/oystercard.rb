@@ -13,11 +13,7 @@ class Oystercard
     raise "Balance cannot be over £#{BALANCE_LIMIT}" if limit_exceeded?(amount)
 
     @balance += amount
-  end
-
-  def deduct(amount)
-    @balance -= amount
-  end
+  end  
 
   def in_journey?
     in_journey
@@ -30,13 +26,17 @@ class Oystercard
   end
 
   def touch_out
-    @balance -= MINIMUM_FARE
+    deduct(MINIMUM_FARE)
     @in_journey = false
   end
 
   private
 
   attr_reader :in_journey
+
+  def deduct(amount)
+    @balance -= amount
+  end
 
   def limit_exceeded?(amount)
     balance + amount > BALANCE_LIMIT
