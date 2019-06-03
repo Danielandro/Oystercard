@@ -9,6 +9,9 @@ describe Oystercard do
     it 'has a balance of 0' do
       expect(subject.balance).to eq(0)
     end
+
+    it { is_expected.not_to be_in_journey }
+    
   end
 
   describe '#top_up' do
@@ -27,5 +30,7 @@ describe Oystercard do
       expect { subject.deduct(@amount) }.to change { subject.balance }.by(-@amount)
     end
   end
+
+
 
 end

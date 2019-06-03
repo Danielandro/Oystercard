@@ -4,6 +4,7 @@ class Oystercard
 
   def initialize
     @balance = 0
+    @in_journey = false
   end
 
   def top_up(amount)
@@ -16,9 +17,16 @@ class Oystercard
     @balance -= amount
   end
 
-  private
+  def in_journey?
+    in_journey
+  end
+
+  private  
+
+  attr_reader :in_journey
 
   def limit_exceeded?(amount)
     balance + amount > BALANCE_LIMIT
   end
+  
 end
