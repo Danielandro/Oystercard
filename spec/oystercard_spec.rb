@@ -17,7 +17,8 @@ describe Oystercard do
     end
 
     it "prevents balance exceeding £#{Oystercard::BALANCE_LIMIT}" do
-      expect { subject.top_up(100) }.to raise_error("Balance cannot be over £#{Oystercard::BALANCE_LIMIT}")
+      message = "Balance cannot be over £#{Oystercard::BALANCE_LIMIT}"
+      expect { subject.top_up(100) }.to raise_error(message)
     end
   end
 
