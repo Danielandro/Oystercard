@@ -2,9 +2,7 @@ class Oystercard
   BALANCE_LIMIT = 90
   MINIMUM_FARE = 1
 
-  attr_reader :balance
-  attr_reader :entry_station
-  attr_reader :exit_station
+  attr_reader :balance  
   attr_reader :current_journey
   attr_reader :journey_history
 
@@ -27,23 +25,24 @@ class Oystercard
 
   def touch_in(entry_station)
     raise "Not enough funds" if not_enough_funds?  
-    @current_journey << entry_station
+    save_journey(entry_station)
   end
 
   def touch_out(exit_station)
-    deduct(MINIMUM_FARE)
-    @entry_station = nil
-    @exit_station = exit_station
+    deduct(MINIMUM_FARE)   
     save_journey(exit_station)
   end
 
   def save_journey(exit_station)  
     @current_journey << exit_station
-    key = "journey_#{@journey_number}".to_sym   
-    @journey_history[key] = @current_journey
+
+    if @current_journey.length == 2
+      key = "journey_#{@journey_number}".to_sym   
+      @journey_history[key] = @current_journey
    
-    @current_journey = []
-    @journey_number += 1
+      @current_journey = []
+      @journey_number += 1
+    end
   end
 
   private

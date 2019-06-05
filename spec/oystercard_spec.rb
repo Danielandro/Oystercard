@@ -31,7 +31,7 @@ describe Oystercard do
     end
 
     describe '#touch_in' do
-      it 'is in journey after touching in' do  
+      it 'in_journey is true after touching in' do  
         subject.top_up(@amount)      
         subject.touch_in(station)
         expect(subject).to be_in_journey
@@ -55,7 +55,7 @@ describe Oystercard do
         subject.touch_in(station)
       end
 
-      it 'is not in journey after touching out' do  
+      it 'in_journey is false after touching out' do  
         subject.touch_out(station)
         expect(subject).not_to be_in_journey
       end
@@ -65,12 +65,12 @@ describe Oystercard do
       end
     end
 
-    it 'saves station when touching out' do
+    it 'clears current journey when touching out' do
       subject.top_up(@amount) 
       subject.touch_in(station)
       subject.touch_out(station)
 
-      expect(subject.exit_station).to eq(station)
+      expect(subject.current_journey).to be_empty
     end
       
     it { is_expected.to respond_to(:save_journey) }
