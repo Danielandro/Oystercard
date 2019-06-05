@@ -47,7 +47,7 @@ describe Oystercard do
      it 'remembers station on touch in' do
         subject.top_up(@amount)      
         subject.touch_in(station)
-        expect(subject.station).to eq(station)
+        expect(subject.entry_station).to eq(station)
       end
     end
 
