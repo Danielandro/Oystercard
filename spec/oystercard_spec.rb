@@ -5,6 +5,8 @@ describe Oystercard do
     @amount = 10
   end
 
+  
+
   describe 'Initialization' do
     it 'has a balance of 0' do
       expect(subject.balance).to eq(0)
@@ -23,24 +25,36 @@ describe Oystercard do
     end
   end
 
-  describe 'on journey' do    
+  describe 'on journey' do      
+
+    let(:station) { double 'station' }
+    before(:each) do
+      @amount = 10
+    end
 
     describe '#touch_in' do
       it 'is in journey after touching in' do  
         subject.top_up(@amount)      
-        subject.touch_in
+        subject.touch_in(station)
         expect(subject).to be_in_journey
       end
+
       it "raises an error if I have less than £#{Oystercard::MINIMUM_FARE}" do
         message = "Not enough funds"
-        expect { subject.touch_in }.to raise_error(message)
+        expect { subject.touch_in(station) }.to raise_error(message)
+      end
+
+     it 'remembers station on touch in' do
+        subject.top_up(@amount)      
+        subject.touch_in(station)
+        expect(subject.station).to eq(station)
       end
     end
 
     describe '#touch_out' do
       before(:each) do
         subject.top_up(@amount) 
-        subject.touch_in
+        subject.touch_in(station)
       end
 
       it 'is not in journey after touching out' do  
