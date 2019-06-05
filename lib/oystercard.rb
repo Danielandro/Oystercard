@@ -9,8 +9,7 @@ class Oystercard
   attr_reader :journey_history
 
   def initialize
-    @balance = 0    
-    @entry_station 
+    @balance = 0       
     @current_journey = []
     @journey_history = {}
     @journey_number = 1
@@ -23,13 +22,11 @@ class Oystercard
   end  
 
   def in_journey?     
-    !!@entry_station
+    !@current_journey.empty?
   end
 
   def touch_in(entry_station)
-    raise "Not enough funds" if not_enough_funds?
-    
-    @entry_station = entry_station
+    raise "Not enough funds" if not_enough_funds?  
     @current_journey << entry_station
   end
 

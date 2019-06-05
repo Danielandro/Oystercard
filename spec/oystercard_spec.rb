@@ -3,9 +3,7 @@ require 'oystercard'
 describe Oystercard do
   before(:each) do
     @amount = 10
-  end
-
-  
+  end  
 
   describe 'Initialization' do
     it 'has a balance of 0' do
@@ -47,7 +45,7 @@ describe Oystercard do
      it 'remembers station on touch in' do
         subject.top_up(@amount)      
         subject.touch_in(station)
-        expect(subject.entry_station).to eq(station)
+        expect(subject.current_journey).to eq([station])
       end
     end
 
@@ -74,7 +72,7 @@ describe Oystercard do
 
       expect(subject.exit_station).to eq(station)
     end
-    
+      
     it { is_expected.to respond_to(:save_journey) }
 
     it 'saves current journey in journey history' do
@@ -83,10 +81,7 @@ describe Oystercard do
       subject.touch_out(station)      
 
       expect(subject.journey_history).to eq({ journey_1: [station, station] })
-    end
-
-
-  
+    end  
   end
 
   
