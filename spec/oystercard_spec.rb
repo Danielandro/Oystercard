@@ -74,14 +74,6 @@ describe Oystercard do
 
       expect(subject.exit_station).to eq(station)
     end
-
-    # it 'populates current journey with entry and exit stations' do
-    #   subject.top_up(@amount) 
-    #   subject.touch_in(station)
-    #   subject.touch_out(station)
-    #   p subject.current_journey
-    #   expect(subject.current_journey).to eq([station, station])      
-    # end
     
     it { is_expected.to respond_to(:save_journey) }
 
