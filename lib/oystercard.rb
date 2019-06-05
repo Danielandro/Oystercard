@@ -4,10 +4,16 @@ class Oystercard
 
   attr_reader :balance
   attr_reader :entry_station
+  attr_reader :exit_station
+  attr_reader :current_journey
+  attr_reader :journey_history
 
   def initialize
     @balance = 0    
     @entry_station 
+    @current_journey = []
+    @journey_history = {}
+    @journey_number = 1
   end
 
   def top_up(amount)
@@ -24,16 +30,26 @@ class Oystercard
     raise "Not enough funds" if not_enough_funds?
     
     @entry_station = entry_station
+    @current_journey << entry_station
   end
 
-  def touch_out
+  def touch_out(exit_station)
     deduct(MINIMUM_FARE)
     @entry_station = nil
+    @exit_station = exit_station
+    save_journey(exit_station)
+  end
+
+  def save_journey(exit_station)  
+    @current_journey << exit_station
+    key = "journey_#{@journey_number}".to_sym   
+    @journey_history[key] = @current_journey
+   
+    @current_journey = []
+    @journey_number += 1
   end
 
   private
-
-  attr_reader :in_journey
 
   def deduct(amount)
     @balance -= amount

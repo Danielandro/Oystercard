@@ -58,14 +58,45 @@ describe Oystercard do
       end
 
       it 'is not in journey after touching out' do  
-        subject.touch_out
+        subject.touch_out(station)
         expect(subject).not_to be_in_journey
       end
 
       it 'deducts correct amount' do    
-        expect { subject.touch_out }.to change { subject.balance }.by(-Oystercard::MINIMUM_FARE)
+        expect { subject.touch_out(station) }.to change { subject.balance }.by(-Oystercard::MINIMUM_FARE)
       end
     end
+
+    it 'saves station when touching out' do
+      subject.top_up(@amount) 
+      subject.touch_in(station)
+      subject.touch_out(station)
+
+      expect(subject.exit_station).to eq(station)
+    end
+
+    it 'populates current journey with entry and exit stations' do
+      subject.top_up(@amount) 
+      subject.touch_in(station)
+      subject.touch_out(station)
+      p subject.current_journey
+      expect(subject.current_journey).to eq([station, station])      
+    end
+    
+    it { is_expected.to respond_to(:save_journey) }
+
+    it 'saves current journey in journey history' do
+      subject.top_up(@amount) 
+      subject.touch_in(station)
+      subject.touch_out(station)      
+
+      expect(subject.journey_history).to eq({ journey_1: [station, station] })
+    end
+
+
+  
   end
+
+  
 
 end
