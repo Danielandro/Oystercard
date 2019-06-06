@@ -80,7 +80,7 @@ User touch in
 
 User touch out
   -> get station from Station class
-  -> pass to Journey class
+  -> start a new journey
       -> add to current journey
       -> save to journey history
 
@@ -89,3 +89,8 @@ Save journey(station)
     -> if journey is complete
       -> add to journey history on 
 
+On a journey?
+  -> ask Journey if I'm in_journey
+   -> Journey checks if I have touched in
+      but not touched out
+      <- lets card know if its on a journey
