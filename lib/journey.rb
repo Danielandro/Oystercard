@@ -1,7 +1,11 @@
+require_relative 'oystercard'
+
 class Journey
   attr_reader :current_journey
 
-  def initialize
+  def initialize()
     @current_journey = []
   end
+
+  
 end

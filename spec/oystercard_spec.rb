@@ -23,8 +23,7 @@ describe Oystercard do
     end
   end
 
-  describe 'on journey' do      
-
+  describe 'on journey' do  
     let(:station) { double 'station' }
     before(:each) do
       @amount = 10

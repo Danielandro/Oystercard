@@ -1,14 +1,17 @@
+require_relative 'journey'
+
 class Oystercard
   BALANCE_LIMIT = 90
   MINIMUM_FARE = 1
 
-  attr_reader :balance  
-  attr_reader :current_journey
+  attr_reader :balance    
   attr_reader :journey_history
+  attr_reader :current_journey
 
-  def initialize
-    @balance = 0       
-    @current_journey = []
+  def initialize(journey = Journey.new)
+    @balance = 0   
+    @journey = journey
+    @current_journey = []   
     @journey_history = {}
     @journey_number = 1
   end
@@ -19,7 +22,7 @@ class Oystercard
   end  
 
   def in_journey?     
-    !@current_journey.empty?
+    !current_journey.empty?
   end
 
   def touch_in(entry_station)
@@ -30,7 +33,7 @@ class Oystercard
   def touch_out(exit_station)
     deduct(MINIMUM_FARE)   
     save_journey(exit_station)
-  end
+  end  
 
   def save_journey(exit_station)  
     @current_journey << exit_station
